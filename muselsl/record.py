@@ -30,10 +30,17 @@ def record(
     if data_source == "GYRO":
         chunk_length = LSL_GYRO_CHUNK
 
+    #if not filename:
+    #    filename = os.path.join(os.getcwd(), "%s_recording_%s.csv" %
+    #                            (data_source,
+    #                             strftime('%Y-%m-%d-%H.%M.%S', gmtime())))
     if not filename:
-        filename = os.path.join(os.getcwd(), "%s_recording_%s.csv" %
+        recordings_dir = os.path.join(os.getcwd(), "recordings_csv")
+        os.makedirs(recordings_dir, exist_ok=True)
+        filename = os.path.join(recordings_dir, "%s_recording_%s.csv" %
                                 (data_source,
-                                 strftime('%Y-%m-%d-%H.%M.%S', gmtime())))
+                                strftime('%Y-%m-%d-%H.%M.%S', gmtime())))
+
 
     print("Looking for a %s stream..." % (data_source))
     streams = resolve_byprop('type', data_source, timeout=LSL_SCAN_TIMEOUT)
@@ -75,8 +82,12 @@ def record(
     last_written_timestamp = None
     print('Start recording at time t=%.3f' % t_init)
     print('Time correction: ', time_correction)
-    while (time() - t_init) < duration:
+    while True: # while (time() - t_init) < duration:
         try:
+            if inlet.info().nominal_srate() == 0:
+                print("Stream stopped.")
+                break
+            
             data, timestamp = inlet.pull_chunk(
                 timeout=1.0, max_samples=chunk_length)
 
@@ -200,10 +211,18 @@ def record_direct(duration,
             name = found_muse['name']
         print('Connecting to %s : %s...' % (name if name else 'Muse', address))
 
+    #if not filename:
+    #    filename = os.path.join(
+    #        os.getcwd(),
+    #        ("recording_%s.csv" % strftime("%Y-%m-%d-%H.%M.%S", gmtime())))
+    #    )
     if not filename:
-        filename = os.path.join(
-            os.getcwd(),
-            ("recording_%s.csv" % strftime("%Y-%m-%d-%H.%M.%S", gmtime())))
+        recordings_dir = os.path.join(os.getcwd(), "recordings_csv")
+        os.makedirs(recordings_dir, exist_ok=True)
+        filename = os.path.join(recordings_dir, "%s_recording_%s.csv" %
+                                (data_source,
+                                strftime('%Y-%m-%d-%H.%M.%S', gmtime())))
+
 
     eeg_samples = []
     timestamps = []
