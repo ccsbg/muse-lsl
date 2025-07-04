@@ -6,7 +6,7 @@ requirements:
 	pip install -r requirements.txt
 
 muselsl_modified:
-	pip install -e .
+	cd .. && pip install -e .
 
 connect:
 	muselsl stream --ppg --acc --gyro

@@ -1,3 +1,5 @@
+The following commands should be ran inside the directory "/muselsl".
+
 In order to run this project, you need to have the technologies mentioned "requirments.txt" installed. You can do so by running:
 
 ```make requirements```
