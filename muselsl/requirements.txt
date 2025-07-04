@@ -1,0 +1,7 @@
+muselsl
+matplotlib
+pandas
+vispy
+mne
+PyQt5
+pandas

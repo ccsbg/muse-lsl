@@ -30,18 +30,12 @@ def record(
     if data_source == "GYRO":
         chunk_length = LSL_GYRO_CHUNK
 
-    #if not filename:
-    #    filename = os.path.join(os.getcwd(), "%s_recording_%s.csv" %
-    #                            (data_source,
-    #                             strftime('%Y-%m-%d-%H.%M.%S', gmtime())))
     if not filename:
-        recordings_dir = os.path.join(os.getcwd(), "recordings_csv")
-        os.makedirs(recordings_dir, exist_ok=True)
-        filename = os.path.join(recordings_dir, "%s_recording_%s.csv" %
-                                (data_source,
-                                strftime('%Y-%m-%d-%H.%M.%S', gmtime())))
+       filename = os.path.join(os.getcwd(), "%s_recording_%s.csv" %
+                               (data_source,
+                               strftime('%Y-%m-%d-%H.%M.%S', gmtime())))
 
-
+    print("USING MODIFIED record.py")
     print("Looking for a %s stream..." % (data_source))
     streams = resolve_byprop('type', data_source, timeout=LSL_SCAN_TIMEOUT)
 
@@ -211,18 +205,11 @@ def record_direct(duration,
             name = found_muse['name']
         print('Connecting to %s : %s...' % (name if name else 'Muse', address))
 
-    #if not filename:
-    #    filename = os.path.join(
-    #        os.getcwd(),
-    #        ("recording_%s.csv" % strftime("%Y-%m-%d-%H.%M.%S", gmtime())))
-    #    )
     if not filename:
-        recordings_dir = os.path.join(os.getcwd(), "recordings_csv")
-        os.makedirs(recordings_dir, exist_ok=True)
-        filename = os.path.join(recordings_dir, "%s_recording_%s.csv" %
-                                (data_source,
-                                strftime('%Y-%m-%d-%H.%M.%S', gmtime())))
-
+        filename = os.path.join(
+            os.getcwd(),
+            ("recording_%s.csv" % strftime("%Y-%m-%d-%H.%M.%S", gmtime()))
+        )
 
     eeg_samples = []
     timestamps = []
