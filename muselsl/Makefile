@@ -22,8 +22,18 @@ record:
 csv_to_json: 
 	$(PYTHON) csv_to_json.py
 
-plot:
+plot_real_time:
 	muselsl view --version 2
+
+plot_all:
+	$(PYTHON) visualization.py --mode all \
+		$(if $(START),--start $(START),) \
+		$(if $(END),--end $(END),) \
+		$(if $(FOLDER),--folder $(FOLDER),) \
+		$(if $(OUTPUT),--output $(OUTPUT),)
+
+plot_selected:
+	$(PYTHON) visualization.py --mode selected
 
 kill:
 	-pkill -f "muselsl record" || true
@@ -32,3 +42,4 @@ kill:
 clean:
 	rm -rf recordings_csv
 	rm -rf recordings_json
+	rm -rf recordings_graphs
