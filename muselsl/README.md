@@ -12,7 +12,9 @@ How to run:
 
 ```make record``` - To record the EEG, PPG, ACC and GYRO values to a csv value under the folder "/recordings".
 
-```make record``` - To visualize the EEG's TP9, AF7, AF8, TP10 and Right AUX plots.
+```make csv_to_json``` - To convert the files under the folder "/recordings" from csv to json.
+
+```make plot``` - To visualize the EEG's TP9, AF7, AF8, TP10 and Right AUX plots.
 
 ```make kill``` - To disconnect from Muse S and stop recording. 
 
